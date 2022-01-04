@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.geom.*;
 
 public class Segment {
     
@@ -7,12 +8,23 @@ public class Segment {
     double angle;
     Point b = new Point();
 
-    public Segment(double x, double y, double len_, double angle_) {
+    int index;
+    double sw = 0;
+
+    Segment parent;
+    Segment child;
+
+    public Segment(double x, double y, double len_, int i) {
         a = new Point(x, y);
         this.len = len_;
-        this.angle = angle_;
+        this.angle = 0;
+        this.index = i;
+        this.sw = 50;
         
         findB();
+
+        parent = null;
+        child = null;
     }
 
     private void findB() {
@@ -34,9 +46,13 @@ public class Segment {
         findB();
     }
 
+    public void setSW(double num) { this.sw = num; }
+    public void setLength(double len_) { this.len = len_; }
+
     public void draw(Graphics2D g) {
         g.setColor(Color.WHITE);
-        g.setStroke(new BasicStroke(4));
-        g.drawLine((int)a.getX(), (int)a.getY(), (int)b.getX(), (int)b.getY());
+        // g.setStroke(new BasicStroke(sw));
+        // g.drawLine((int)a.getX(), (int)a.getY(), (int)b.getX(), (int)b.getY());
+        g.fill(new Ellipse2D.Double(b.getX() - sw / 2, b.getY() - sw/2, sw, sw));
     }
 }
