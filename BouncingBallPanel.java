@@ -44,6 +44,7 @@ public class BouncingBallPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             ball.move(getSize());
+            trail.setLength(ball.getVelocity() / 10);
             trail.follow(ball.getX(), ball.getY());
             repaint();
         }
@@ -69,7 +70,9 @@ public class BouncingBallPanel extends JPanel {
                 mouseOldY = newY;
             }
 
-            if(ball.contains(e.getX(), e.getY())) ball.collide(e.getX(), e.getY(), mouseVelocity);
+            if(ball.contains(e.getX(), e.getY())) {
+                if(ball.canCollide()) ball.collide(e.getX(), e.getY(), mouseVelocity);
+            }
         }
     }
 }
